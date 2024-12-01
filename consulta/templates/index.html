@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+</head>
+<body>
+    <h1>FARMACEUTICA</h1>
+    <a href="{% url 'consulta:login' %}">Login</a>
+    <ul style="list-style-type: none;">
+        {% for sucursal in sucursales %}
+        <li>
+            <a href="{% url 'consulta:productos_en_sucursal' sucursal.id%}">
+                <button>
+                    <p>{{ sucursal.nombre }}</p>
+                    <p>{{ sucursal.ubicacion }}</p>
+                    <p>{{ sucursal.telefono }}</p>
+                </button>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
