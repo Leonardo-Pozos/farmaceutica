@@ -8,7 +8,7 @@
 <body>
     <header>
         <nav>
-            <a href="{% url 'ventas:lista_productos' %}">Lista de Productos</a>
+            <a href="{% url 'ventas:lista_productos' 0 %}">Lista de Productos</a>
             <a href="{% url 'ventas:agregar_producto' %}">Agregar Producto</a>
             <a href="{% url 'ventas:venta_productos' %}">Venta</a>
         </nav>
@@ -21,6 +21,16 @@
     </header>
     <main>
         <h2>Venta de Productos</h2>
+
+        <form method="get" action="{% url 'ventas:venta_productos' %}">
+            <label for="sucursal">Selecciona una sucursal:</label>
+            <select name="sucursal"  onchange="this.form.submit()">
+                <option value="">-- Elige una sucursal --</option>
+                {% for sucursal in sucursales %}
+                <option value="{{ sucursal.id }}" {% if request.GET.sucursal == sucursal.id|stringformat:"s" %}selected{% endif %}>{{ sucursal.nombre }}</option>
+                {% endfor %}
+            </select>
+        </form>
         
         {% if error %}
         <p style="color: red;">{{ error }}</p>

@@ -8,7 +8,7 @@
 <body>
     <header>
         <nav>
-            <a href="{% url 'ventas:lista_productos' %}">Lista de Productos</a>
+            <a href="{% url 'ventas:lista_productos' 0 %}">Lista de Productos</a>
             <a href="{% url 'ventas:agregar_producto' %}">Agregar Producto</a>
             <a href="{% url 'ventas:venta_productos' %}">Venta</a>
         </nav>
@@ -23,6 +23,14 @@
 
     <form method="post">
         {% csrf_token %}
+        <label for="sucursal">Selecciona una sucursal:</label>
+        <select name="sucursal" id="sucursal">
+            <option value="">-- Elige una sucursal --</option>
+            {% for sucursal in sucursales %}
+            <option value="{{ sucursal.id }}" {% if sucursal.id|stringformat:"s" == request.POST.sucursal %}selected{% endif %}>{{ sucursal.nombre }}</option>
+            {% endfor %}
+        </select>
+
         <label for="nombre">Nombre:</label>
         <input type="text" name="nombre" id="nombre" required>
         
@@ -41,12 +49,5 @@
     {% if error %}
         <p style="color: red;">{{ error }}</p>
     {% endif %}
-
-    <h2>Lista de Productos</h2>
-    <ul>
-        {% for producto in productos %}
-        <li>{{ producto.nombre }} - Stock: {{ producto.stock }}</li>
-        {% endfor %}
-    </ul>
 </body>
 </html>

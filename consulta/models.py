@@ -11,7 +11,6 @@ class Sucursal(models.Model):
 class InventarioSucursal(models.Model):
     sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE)
     producto = models.ForeignKey('ventas.Producto', on_delete=models.CASCADE)
-    stock = models.PositiveIntegerField()
 
     def __str__(self):
-        return f"{self.producto.nombre} en {self.sucursal.nombre}: {self.stock} disponibles"
+        return f"{self.producto.nombre} en {self.sucursal.nombre}"

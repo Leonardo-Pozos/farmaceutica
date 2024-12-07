@@ -8,19 +8,32 @@
 <body>
     <header>
         <nav>
-            <a href="{% url 'ventas:lista_productos' %}">Lista de Productos</a>
+            <a href="{% url 'ventas:lista_productos' 0 %}">Lista de Productos</a>
             <a href="{% url 'ventas:agregar_producto' %}">Agregar Producto</a>
             <a href="{% url 'ventas:venta_productos' %}">Venta</a>
-        
         </nav>
         <form action="{% url 'logout' %}" method="post">
             {% csrf_token %}
-            <button type="submit">
-                Cerrar sesión
-            </button>
+            <button type="submit">Cerrar sesión</button>
         </form>
     </header>
+    
     <h1>Lista de Productos</h1>
+    
+    <form method="get" action="{% url 'ventas:lista_productos' 0 %}">
+        <label for="sucursal">Selecciona una sucursal:</label>
+        <select name="sucursal" id="sucursal" onchange="window.location.href=this.value;">
+            <option value="{% url 'ventas:lista_productos' 0 %}" {% if not sucursal_seleccionada %}selected{% endif %}>-- Elige una sucursal --</option>
+            {% for sucursal in sucursales %}
+            <option value="{% url 'ventas:lista_productos' sucursal.id %}" {% if sucursal == sucursal_seleccionada %}selected{% endif %}>
+                {{ sucursal.nombre }}
+            </option>
+            {% endfor %}
+        </select>
+    </form>
+    
+    {% if sucursal_seleccionada %}
+    <h2>Productos en {{ sucursal_seleccionada.nombre }}</h2>
     <table>
         <thead>
             <tr>
@@ -52,5 +65,9 @@
             {% endfor %}
         </tbody>
     </table>
+    {% else %}
+    <p>Selecciona una sucursal para ver los productos disponibles.</p>
+    {% endif %}
+    
 </body>
 </html>
