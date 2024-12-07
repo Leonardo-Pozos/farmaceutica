@@ -3,9 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventario</title>
+    <title>Agregar producto</title>
 </head>
 <body>
+    <header>
+        <nav>
+            <a href="{% url 'ventas:lista_productos' %}">Lista de Productos</a>
+            <a href="{% url 'ventas:agregar_producto' %}">Agregar Producto</a>
+            <a href="{% url 'ventas:venta_productos' %}">Venta</a>
+        </nav>
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">
+                Cerrar sesión
+            </button>
+        </form>
+    </header>
+    <h1>Agregar Producto</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" id="nombre" required>
+        
+        <label for="precio">Precio:</label>
+        <input type="number" name="precio" id="precio" required min="1">
+        
+        <label for="descripcion">Descripción:</label>
+        <textarea name="descripcion" id="descripcion" required></textarea>
+        
+        <label for="stock">Stock:</label>
+        <input type="number" name="stock" id="stock" required min="1">
+        
+        <button type="submit">Agregar Producto</button>
+    </form>
     
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    <h2>Lista de Productos</h2>
+    <ul>
+        {% for producto in productos %}
+        <li>{{ producto.nombre }} - Stock: {{ producto.stock }}</li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
