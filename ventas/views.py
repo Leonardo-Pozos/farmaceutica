@@ -15,8 +15,7 @@ def lista_productos(request, idSucursal=None):
         sucursal_seleccionada = get_object_or_404(Sucursal, id=idSucursal)
         inventario = InventarioSucursal.objects.filter(sucursal=sucursal_seleccionada)
         productos = [item.producto for item in inventario]
-    return render(request, 'lista_productos.html', { 'productos': productos, 'sucursales': sucursales, 'sucursal_seleccionada': sucursal_seleccionada,
-    })
+    return render(request, 'lista_productos.html', { 'productos': productos, 'sucursales': sucursales, 'sucursal_seleccionada': sucursal_seleccionada})
 
 
 @login_required
@@ -90,16 +89,16 @@ def venta_productos(request):
     return render(request, 'ventas.html', {'error': error, 'productos': productos, 'ventas': ventas, 'sucursales': sucursales})
 
 @login_required
-def incrementar_stock(request, producto_id):
+def incrementar_stock(request, producto_id, idSucursal=None):
     producto = get_object_or_404(Producto, id=producto_id)
     producto.stock += 1
     producto.save()
-    return redirect('ventas:lista_productos')
+    return redirect('ventas:lista_productos', idSucursal=idSucursal)
 
 @login_required
-def disminuir_stock(request, producto_id):
+def disminuir_stock(request, producto_id, idSucursal=None):
     producto = get_object_or_404(Producto, id=producto_id)
     if producto.stock > 0:
         producto.stock -= 1
         producto.save()
-    return redirect('ventas:lista_productos')
+    return redirect('ventas:lista_productos', idSucursal=idSucursal)
