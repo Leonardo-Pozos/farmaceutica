@@ -61,32 +61,89 @@ def agregar_producto(request):
 
 
 @login_required
-def venta_productos(request):
+def venta_productos(request, idSucursal=None):
     sucursales = Sucursal.objects.all()
     error = None
+    productos = None
+    ventas = Venta.objects.all().order_by('-fecha')[:10]
+    sucursal_seleccionada = None 
+
+    if idSucursal:
+        sucursal_seleccionada = get_object_or_404(Sucursal, id=idSucursal)
+    
+    if sucursal_seleccionada:
+        inventario = InventarioSucursal.objects.filter(sucursal=sucursal_seleccionada)
+        productos = [item.producto for item in inventario]
+
     if request.method == "POST":
         try:
-            productos_seleccionados = False
-            for producto in Producto.objects.all():
-                cantidad_key = f'cantidad_{producto.id}'
-                cantidad = request.POST.get(cantidad_key)
-                if not cantidad:
-                    continue  
-                productos_seleccionados = True
-                cantidad = int(cantidad)
-                if producto.stock < cantidad:
-                    raise ValueError(f"No hay suficiente stock para {producto.nombre}. Disponible: {producto.stock}.")
-                producto.stock -= cantidad
-                producto.save()
-                Venta.objects.create(producto=producto, cantidad=cantidad, usuario=request.user)
-            if not productos_seleccionados:
-                raise ValueError("Debe seleccionar al menos un producto e indicar la cantidad para realizar una venta.")    
-            return redirect('ventas:venta_productos')
-        except ValueError as e:
+            if 'confirmar_venta' in request.POST:
+                productos_seleccionados = False
+                for item in inventario:
+                    producto = item.producto
+                    cantidad_key = f'cantidad_{producto.id}'
+                    cantidad = request.POST.get(cantidad_key)
+
+                    # Saltar si no se especificó una cantidad para este producto
+                    if not cantidad:
+                        continue
+
+                    productos_seleccionados = True
+                    cantidad = int(cantidad)
+
+                    # Validar stock suficiente
+                    if producto.stock < cantidad:
+                        raise ValueError(f"No hay suficiente stock para '{producto.nombre}'. Disponible: {producto.stock}.")
+
+                    # Reducir el stock y guardar la venta
+                    producto.stock -= cantidad
+                    producto.save()
+
+                    Venta.objects.create(
+                        producto=producto,
+                        cantidad=cantidad
+                    )
+
+                if not productos_seleccionados:
+                    raise ValueError("Debe seleccionar al menos un producto e indicar la cantidad para realizar una venta.")
+
+                # Redirigir después de una venta exitosa
+                return redirect('ventas:venta_productos', idSucursal=idSucursal)
+
+        except (ValueError, Sucursal.DoesNotExist) as e:
             error = str(e)
-    productos = Producto.objects.all()
-    ventas = Venta.objects.all().order_by('-fecha')[:10]
-    return render(request, 'ventas.html', {'error': error, 'productos': productos, 'ventas': ventas, 'sucursales': sucursales})
+
+    # Renderizar la vista
+    return render(request, 'ventas.html', {'error': error, 'productos': productos, 'ventas': ventas, 'sucursales': sucursales, 'sucursal_seleccionada': sucursal_seleccionada})
+
+
+# @login_required
+# def venta_productos(request):
+#     sucursales = Sucursal.objects.all()
+#     error = None
+#     if request.method == "POST":
+#         try:
+#             productos_seleccionados = False
+#             for producto in Producto.objects.all():
+#                 cantidad_key = f'cantidad_{producto.id}'
+#                 cantidad = request.POST.get(cantidad_key)
+#                 if not cantidad:
+#                     continue  
+#                 productos_seleccionados = True
+#                 cantidad = int(cantidad)
+#                 if producto.stock < cantidad:
+#                     raise ValueError(f"No hay suficiente stock para {producto.nombre}. Disponible: {producto.stock}.")
+#                 producto.stock -= cantidad
+#                 producto.save()
+#                 Venta.objects.create(producto=producto, cantidad=cantidad, usuario=request.user)
+#             if not productos_seleccionados:
+#                 raise ValueError("Debe seleccionar al menos un producto e indicar la cantidad para realizar una venta.")    
+#             return redirect('ventas:venta_productos')
+#         except ValueError as e:
+#             error = str(e)
+#     productos = Producto.objects.all()
+#     ventas = Venta.objects.all().order_by('-fecha')[:10]
+#     return render(request, 'ventas.html', {'error': error, 'productos': productos, 'ventas': ventas, 'sucursales': sucursales})
 
 @login_required
 def incrementar_stock(request, producto_id, idSucursal=None):

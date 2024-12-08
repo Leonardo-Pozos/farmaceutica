@@ -10,7 +10,7 @@
         <nav>
             <a href="{% url 'ventas:lista_productos' 0 %}">Lista de Productos</a>
             <a href="{% url 'ventas:agregar_producto' %}">Agregar Producto</a>
-            <a href="{% url 'ventas:venta_productos' %}">Venta</a>
+            <a href="{% url 'ventas:venta_productos' 0 %}">Venta</a>
         </nav>
         <form action="{% url 'logout' %}" method="post">
             {% csrf_token %}
