@@ -21,7 +21,8 @@
     </header>
     <main>
         <h1>Venta de Productos</h1>
-        
+
+        <!-- Selección de sucursal -->
         <form method="POST" action="{% url 'ventas:venta_productos' 0 %}">
             {% csrf_token %}
             <label for="sucursal">Seleccionar Sucursal:</label>
@@ -35,40 +36,63 @@
             </select>
         </form>
 
+        <!-- Inventario de la sucursal -->
         {% if productos %}
-        <form method="POST">
-            {% csrf_token %}
-            <table>
-                <thead>
-                    <tr>
-                        <th>Producto</th>
-                        <th>Precio</th>
-                        <th>Stock</th>
-                        <th>Cantidad</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for producto in productos %}
-                    <tr>
-                        <td>{{ producto.nombre }}</td>
-                        <td>{{ producto.precio }}</td>
-                        <td>{{ producto.stock }}</td>
-                        <td><input type="number" name="cantidad_{{ producto.id }}" min="1"></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <button type="submit" name="confirmar_venta">Confirmar Venta</button>
-        </form>
+            <form method="POST">
+                {% csrf_token %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for producto in productos %}
+                            <tr>
+                                <td>{{ producto.nombre }}</td>
+                                <td>{{ producto.precio }}</td>
+                                <td>{{ producto.stock }}</td>
+                                <td><input type="number" name="cantidad_{{ producto.id }}" min="1"></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <button type="submit" name="confirmar_venta">Confirmar Venta</button>
+            </form>
         {% else %}
-        <p>Seleccione una sucursal para ver su inventario.</p>
+            <p>Seleccione una sucursal para ver su inventario.</p>
         {% endif %}
 
-
+        <!-- Manejo de errores -->
         {% if error %}
-        <p style="color: red;">{{ error }}</p>
+            <div style="color: red; margin-top: 20px; border: 1px solid red; padding: 10px; border-radius: 5px;">
+                <p>{{ error }}</p>
+            </div>
         {% endif %}
-        
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for venta in ventas %}
+                    <tr>
+                        <td>{{venta.producto}}</td>
+                        <td>{{venta.cantidad}}</td>
+                        <td>${{venta.precio_total}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </main>
     <footer>
         <p>&copy; 2024 Inventario Farmacia</p>
     </footer>
