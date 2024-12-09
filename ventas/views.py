@@ -50,6 +50,8 @@ def venta_productos(request, idSucursal=None):
     ventas = Venta.objects.filter(sucursal__id=idSucursal).order_by('-fecha')[:10] if idSucursal else []
     sucursal_seleccionada = None 
     productos_seleccionados = None
+    venta_realizada = []
+    costo_total = 0
 
     if idSucursal:
         sucursal_seleccionada = get_object_or_404(Sucursal, id=idSucursal)
@@ -82,17 +84,28 @@ def venta_productos(request, idSucursal=None):
                     producto.stock -= cantidad
                     producto.save()
 
-                    Venta.objects.create(
+                    venta_re = Venta.objects.create(
                         producto=producto,
                         cantidad=cantidad,
                         precio_total=total_producto,
                         sucursal=sucursal_seleccionada
                     )
+
+                    venta_realizada.append(venta_re)
+                    costo_total += total_producto
                 
                 if not productos_seleccionados:
                     raise ValueError("Debe seleccionar al menos un producto e indicar la cantidad para realizar una venta.")
                 
-                return redirect('ventas:venta_productos', idSucursal=idSucursal)
+                return render(request, 'ventas.html', {
+                    'error': error,
+                    'productos': productos,
+                    'ventas': ventas,
+                    'sucursales': sucursales,
+                    'sucursal_seleccionada': sucursal_seleccionada,
+                    'costo_total': costo_total,
+                    'venta_realizada': venta_realizada
+                })
         except (ValueError, Sucursal.DoesNotExist) as e:
             error = str(e)
             

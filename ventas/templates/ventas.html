@@ -73,24 +73,36 @@
             </div>
         {% endif %}
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for venta in ventas %}
+        {% if venta_realizada %}
+            <h2>Ticket</h2>
+            {% for venta_producto in venta_realizada %}
+            <p>{{venta_producto}}</p>
+            {% endfor %}
+            <p><strong>Total: ${{ costo_total }}</strong></p>
+        {% endif %}
+
+
+        {% if productos %}
+            <h3>Ventas recientes</h3>
+            <table>
+                <thead>
                     <tr>
-                        <td>{{venta.producto}}</td>
-                        <td>{{venta.cantidad}}</td>
-                        <td>${{venta.precio_total}}</td>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for venta in ventas %}
+                        <tr>
+                            <td>{{venta.producto}}</td>
+                            <td>{{venta.cantidad}}</td>
+                            <td>${{venta.precio_total}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
 
     </main>
     <footer>
