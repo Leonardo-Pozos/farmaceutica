@@ -1,0 +1,109 @@
+/* Importar las fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital@1&family=Prompt:wght@500&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+/* Fondo del cuerpo */
+body {
+    background-color: #1e2a47; /* Fondo azul */
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', 'Prompt', 'Ubuntu', sans-serif; /* Cambiado a las fuentes proporcionadas */
+    display: flex;
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+    height: 100vh; /* Altura completa de la ventana */
+    color: #ffffff; /* Texto blanco */
+    flex-direction: column; /* Apilar el título y el formulario en columna */
+}
+
+/* Encabezado principal (LOGIN) */
+h1 {
+    font-size: 60px; /* Tamaño de letra más grande */
+    margin: 0; /* Eliminar margen por defecto */
+    padding-top: 0; /* Eliminar padding superior */
+    margin-top: -250px; /* Mover el título aún más hacia arriba */
+    padding-left: 1000px; /* Mucho más espacio en la izquierda */
+    text-align: left; /* Alinear el texto hacia la izquierda */
+    width: 100%; /* Hacer que ocupe todo el ancho */
+    font-family: 'Lato', 'Prompt', 'Ubuntu', sans-serif; /* Fuente personalizada */
+}
+
+/* Estilo del contenedor de cada campo (username y password) */
+form .form-group {
+    display: flex; /* Usamos flexbox para alinearlos en fila */
+    justify-content: flex-start; /* Alinea los elementos a la izquierda */
+    margin: 20px 0; /* Separar un poco del título */
+    width: 100%;
+}
+
+/* Estilo para las etiquetas de los campos (username y password) */
+form label {
+    font-size: 30px; /* Tamaño de letra para los labels */
+    width: 150px; /* Ancho fijo para las etiquetas */
+    text-align: left; /* Alinear a la izquierda */
+    font-family: 'Lato', 'Prompt', 'Ubuntu', sans-serif; /* Fuente personalizada */
+}
+
+/* Estilo de los campos de entrada (input) */
+form input {
+    font-size: 18px; /* Letra grande */
+    padding: 10px;
+    width: calc(100% - 40px); /* Ancho total menos el padding */
+    margin-left: 10px; /* Separar un poco del label */
+    color: #333333; /* Letra oscura para mejor contraste */
+    background-color: #ffffff; /* Fondo blanco */
+    border: 1px solid #cccccc; /* Borde gris claro */
+    border-radius: 5px;
+    font-family: 'Lato', 'Prompt', 'Ubuntu', sans-serif; /* Fuente personalizada */
+}
+
+/* Contenedor del formulario */
+.form-container {
+    padding: 20px; /* Espaciado alrededor */
+    width: 100%;
+    max-width: 400px; /* Ancho máximo del formulario */
+}
+
+/* Botón de Login */
+form button[type="submit"] {
+    background-color: #ffffff; /* Fondo blanco */
+    color: #2f3b69; /* Texto azul oscuro */
+    border: 2px solid #2f3b69; /* Borde azul oscuro */
+    padding: 20px 30px; /* Aumentamos el tamaño del botón */
+    border-radius: 5px;
+    font-size: 20px; /* Aumentamos el tamaño del texto */
+    cursor: pointer;
+    margin-top: 10px;
+    width: auto; /* Botón con tamaño automático */
+    text-align: center; /* Aseguramos que el texto esté centrado */
+    align-self: flex-start; /* Alineamos el botón a la izquierda */
+    font-family: 'Lato', 'Prompt', 'Ubuntu', sans-serif; /* Fuente personalizada */
+}
+
+form button[type="submit"]:hover {
+    background-color: #e0e0e0; /* Fondo gris claro al pasar el mouse */
+    border-color: #1f2a47; /* Cambiar el borde a un tono más oscuro */
+}
+
+/* Enlace de navegación "Volver" */
+.back-button {
+    margin-top: 20px; /* Añadido un pequeño margen superior */
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: transparent;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    font-family: 'Lato', 'Prompt', 'Ubuntu', sans-serif;
+    transition: all 0.4s ease, transform 0.4s ease; /* Transiciones suaves */
+}
+
+/* Animación al pasar el mouse */
+.back-button:hover {
+    background-color: #ffffff;
+    color: #2f3b69;
+    transform: scale(1.1); /* Aumenta ligeramente el tamaño */
+}

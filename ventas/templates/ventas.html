@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Venta</title>
+    <link rel="stylesheet" href="{% static 'ventas.css' %}?v=1">
+    <link rel="stylesheet" href="{% static 'lista_productos.css' %}?v={{ STATIC_VERSION }}">
+
 </head>
 <body>
     <header>
@@ -68,7 +72,7 @@
 
         <!-- Manejo de errores -->
         {% if error %}
-            <div style="color: red; margin-top: 20px; border: 1px solid red; padding: 10px; border-radius: 5px;">
+            <div class="error-message">
                 <p>{{ error }}</p>
             </div>
         {% endif %}
@@ -76,7 +80,7 @@
         {% if venta_realizada %}
             <h2>Ticket</h2>
             {% for venta_producto in venta_realizada %}
-            <p>{{venta_producto}}</p>
+                <p>{{venta_producto}}</p>
             {% endfor %}
             <p><strong>Total: ${{ costo_total }}</strong></p>
         {% endif %}

@@ -1,17 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="{% static 'login.css' %}">
 </head>
 <body>
     <h1>Login</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" href="{% url 'ventas:lista_productos' 0%}">Login</button>
-        <a href="{% url 'consulta:lista_sucursales' %}">Volver</a>
-    </form>
+    <div class="form-container"></div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username:</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                {{ form.password }}
+            </div>
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+    </div>
+    <a class="back-button" href="{% url 'consulta:lista_sucursales' %}">Volver</a>
 </body>
 </html>

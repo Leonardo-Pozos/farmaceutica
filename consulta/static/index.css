@@ -1,0 +1,128 @@
+/* Importar las fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Prompt:wght@500&family=Ubuntu:wght@400;500&display=swap');
+
+/* Estilo general del cuerpo */
+body {
+    font-family: 'Lato', 'Prompt', 'Ubuntu', sans-serif; /* Fuente personalizada */
+    margin: 0;
+    padding: 0;
+    background-color: #1e2a47; /* Fondo azul */
+    color: #ffffff; /* Letras blancas */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    text-align: center;
+}
+
+/* Encabezado principal */
+h1 {
+    font-size: 120px; /* Título grande */
+    color: #ffffff; /* Letras blancas */
+    margin: 20px 0 50px; /* Ajustar márgenes para colocarlo más arriba */
+    font-weight: 700;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+}
+
+/* Lista de sucursales */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 80%;
+    max-width: 800px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Estilo de cada sucursal */
+li {
+    margin: 20px;
+    width: 250px;
+}
+
+/* Tarjetas de sucursales */
+li a {
+    display: block;
+    text-decoration: none;
+}
+
+li button {
+    width: 100%;
+    padding: 25px; /* Aumentar padding dentro del botón */
+    font-size: 18px;
+    text-align: left;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+li button:hover {
+    transform: translateY(-5px); /* Efecto de elevación */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Aumenta la sombra */
+}
+
+/* Estilo de los textos de las sucursales dentro de los botones */
+li button p {
+    font-family: 'Prompt', sans-serif; /* Fuente específica para los textos de las sucursales */
+    margin: 12px 0; /* Aumentar espacio entre los textos */
+    font-weight: 400;
+    font-size: 18px; /* Aumentar el tamaño del texto */
+    padding: 12px; /* Aumentar el padding para hacer el recuadro más grande */
+    background-color: #f4f4f4; /* Fondo gris claro para destacar los recuadros */
+    border-radius: 8px; /* Bordes redondeados para los recuadros */
+}
+
+/* Nombre de la sucursal */
+li button p:nth-child(1) {
+    font-weight: 600; /* Nombre de la sucursal en negrita */
+    font-size: 20px; /* Aumentar el tamaño del nombre de la sucursal */
+    background-color: #e1e1e1; /* Fondo ligeramente distinto para el nombre */
+    padding: 15px; /* Aumentar el padding */
+}
+
+/* Botón de Login */
+.login-button {
+    display: inline-block;
+    margin: 40px 0;
+    font-size: 18px;
+    color: #ffffff; /* Texto blanco */
+    text-decoration: none;
+    border: 2px solid #ffffff;
+    border-radius: 25px;
+    padding: 12px 30px;
+    background-color: transparent;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.login-button:hover {
+    background-color: #ffffff; /* Fondo blanco */
+    color: #2f3b69; /* Texto azul */
+    transform: scale(1.1); /* Efecto de zoom */
+}
+
+/* Media query para pantallas pequeñas */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 80px; /* Reducir el tamaño en pantallas más pequeñas */
+    }
+
+    ul {
+        width: 100%;
+    }
+
+    li {
+        width: 100%;
+    }
+}
